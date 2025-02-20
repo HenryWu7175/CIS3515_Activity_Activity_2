@@ -16,15 +16,21 @@ class TextSizeActivity : AppCompatActivity() {
 
         // Create array of integers that are multiples of 5
         // Verify correctness by examining array values.
-        val textSizes = Array(20){(it + 1) * 5}
+        val textSizes = Array(20){(it + 1)*5}
 
         Log.d("Array values", textSizes.contentToString())
 
         with (findViewById(R.id.textSizeSelectorRecyclerView) as RecyclerView) {
 
             // TODO Step 2: Pass selected value back to activity that launched TextSizeActivity
-            adapter = TextSizeAdapter(textSizes){
+            adapter = TextSizeAdapter(textSizes){ size -> //this calls teh built in text size adapter to display the textsize array to the spinner
 
+
+                val intent2 = intent.apply{ //another intent is made, this one attached with the selected fontsize from the spinner
+                    putExtra(TEXTSIZE, size.toFloat())
+                }
+                setResult(FONTSELECTED, intent2) // Return the result
+                finish() // Close activity
             }
             layoutManager = LinearLayoutManager(this@TextSizeActivity)
         }
