@@ -16,11 +16,12 @@ class DisplayActivity : AppCompatActivity() {
     private var Launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result -> //this lambda is aka callback
         //this line above uses the Acitivity result launcher to register a launcher to start an activity that can receive a callback(a return)
         if (result.resultCode == FONTSELECTED) { //checks if the activity has launched
-            val textSize = result.data?.getFloatExtra(TEXTSIZE, 16f) ?: 16f
             //this line retreives the intent that was sent back from text size activity and uses getfloat to extract float number
-            //the ?: is a null safety
-            lyricsDisplayTextView.textSize = textSize
-            //sets the displayview in the original activity to the size
+
+            result.data?.run {//the ? is a null safety and runs if not null
+                lyricsDisplayTextView.textSize = getFloatExtra(TEXTSIZE, 22f)
+                //sets the displayview in the original activity to the size
+            }
         }
     }
 
